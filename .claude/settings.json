@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "project": "antunovich-ai",
+  "firm": "Antunovich Associates",
+  "hooks": {
+    "PreToolUse": ".claude/hooks/pre-tool-use.sh",
+    "PostToolUse": ".claude/hooks/post-tool-use.sh",
+    "SessionStart": ".claude/hooks/session-start.sh",
+    "SessionEnd": ".claude/hooks/session-end.sh",
+    "PreCommit": ".claude/hooks/pre-commit.sh",
+    "Notification": ".claude/hooks/notification.sh"
+  },
+  "skills": { "autoActivate": true, "path": "skills/" },
+  "agents": { "path": "agents/" },
+  "mcp": { "config": ".mcp.json" },
+  "context": { "warnAt": 0.7, "compactAt": 0.8, "clearAt": 0.9 }
+}

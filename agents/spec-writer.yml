@@ -1,0 +1,12 @@
+name: spec-writer
+type: subagent
+skill: spec-writer
+triggers: ["write spec", "draft specification", "Section ", "MasterFormat"]
+inputs:
+  division: string
+  section_number: string
+  product_name: string
+  data_sheet_path: string  # optional
+output: docs/specs/{section_number}.md
+model: claude-sonnet-4-20250514
+max_tokens: 4000

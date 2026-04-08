@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"],
+      "status": "active",
+      "note": "Local file access — reading drawings, specs, docs"
+    },
+    "email": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-email"],
+      "status": "active",
+      "note": "Email MCP for RFI distribution and procurement"
+    },
+    "revit": {
+      "command": "npx",
+      "args": ["-y", "@autodesk/revit-mcp"],
+      "status": "blocked",
+      "note": "Blocked by IT — needs npm registry + PyPI + AppData write. Escalate to IT.",
+      "requirements": ["npm registry access", "PyPI access", "AppData write permissions"]
+    },
+    "procore": {
+      "command": "npx",
+      "args": ["-y", "@procore/mcp-server"],
+      "status": "planned",
+      "env": {
+        "PROCORE_TOKEN": "${PROCORE_TOKEN}"
+      }
+    },
+    "sharepoint": {
+      "command": "npx",
+      "args": ["-y", "@microsoft/sharepoint-mcp"],
+      "status": "planned",
+      "note": "For Power Automate + procurement workflow integration"
+    }
+  }
+}

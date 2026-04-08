@@ -1,0 +1,13 @@
+name: rfi-agent
+type: subagent
+skill: rfi-drafter
+triggers: ["write RFI", "draft RFI", "field question", "clarification request"]
+inputs:
+  project: string
+  drawing_ref: string
+  spec_section: string
+  question: string
+output: docs/rfis/RFI-{project}-{number}.md
+log: docs/rfis/rfi-log.json
+model: claude-sonnet-4-20250514
+max_tokens: 2000

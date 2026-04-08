@@ -1,0 +1,13 @@
+{
+  "name": "antunovich-ai",
+  "version": "1.0.0",
+  "description": "Antunovich Associates — Claude Code AI Workspace",
+  "scripts": {
+    "start": "claude",
+    "deploy": "./scripts/deploy.sh",
+    "seed": "./scripts/seed.sh"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

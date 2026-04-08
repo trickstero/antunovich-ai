@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    {
+      "name": "antunovich-core",
+      "version": "1.0.0",
+      "description": "Core Antunovich terminology, practice area context, and style guidelines",
+      "path": "plugins/antunovich-core/",
+      "autoLoad": true
+    }
+  ]
+}

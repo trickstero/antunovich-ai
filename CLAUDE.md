@@ -1,0 +1,56 @@
+# CLAUDE.md — Antunovich Associates AI Workspace
+
+## Firm Identity
+- **Firm:** Antunovich Associates — Chicago (244 W. Huron St.) & Washington DC
+- **Size:** ~80 staff | Mixed-use, Multi-family, Student Housing, Luxury Retail, Historic Preservation, Hospitality, Civic/Education, Workplace, Interior Design
+- **AI Lead:** Staszek Matuzik (Senior Associate)
+
+## Tech Stack
+- **Visualization:** Lumion → 3ds Max → Krea.ai (Nano Banana / NB2) → Magnific → Topaz → Photoshop
+- **Project Management:** Procore, Deltek
+- **Collaboration:** SharePoint, Power Automate
+- **Dev:** Node.js, Python, TypeScript
+- **MCP Active:** Filesystem (local), Email
+- **MCP Planned:** Revit (blocked by IT — needs npm registry + PyPI access)
+
+## Architecture Conventions
+- Always use professional architectural terminology
+- Spec sections follow MasterFormat divisions
+- RFIs reference drawing numbers and spec sections
+- SHPO narratives follow Secretary of the Interior's Standards
+- Visualization prompts use Todd Formula (see skills/todd-formula)
+
+## Practice Areas (for context-aware responses)
+1. Mixed-use retail (Crate & Barrel, Arhaus, Butter Milk Ranch)
+2. Multi-family residential
+3. Student housing (HUB / ŌLIV series)
+4. Luxury retail (Armani, Prada, Brunello Cucinelli)
+5. Interior design / FF&E
+6. Workplace
+7. Civic / Education (DePaul)
+8. Historic Preservation (Uline Arena, Hotel Burnham, The Robey)
+9. Hospitality
+
+## Git & Deployment
+- GitHub: trickstero/antunovich-ai
+- Pages: https://trickstero.github.io/antunovich-ai
+- Branch strategy: main (stable) → feature/* → PR → merge
+
+## Security Rules
+- Never store API keys in CLAUDE.md
+- Use .env.example for key templates
+- settings.local.json is gitignored — put secrets there
+- PreCommit hook scans for exposed credentials
+
+## Context Management
+- 0–50% context → work freely
+- 50–70% → monitor token usage
+- 70–80% → run /compact
+- 70–90% → run /compact
+- 90%+ → /clear is mandatory
+
+## Anti-Patterns (avoid)
+- CLAUDE.md over 500 lines → causes context bloat
+- Vague instructions → always be specific
+- Replicating docs → link, don't copy
+- No text guidance → leads to skipped tests

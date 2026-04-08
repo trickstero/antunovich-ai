@@ -1,0 +1,14 @@
+{
+  "practiceAreas": ["mixed-use", "multi-family", "student-housing", "luxury-retail", "interior-design", "workplace", "civic-education", "historic-preservation", "hospitality"],
+  "activeClients": ["Todd (Kingswood/Brekenwood)", "Patricia (restaurant)", "Antunovich internal"],
+  "luxuryBrands": ["Armani", "Prada", "Brunello Cucinelli", "Panerai", "IWC", "Breitling", "JLC", "Omega", "David Yurman"],
+  "historicProjects": ["Uline Arena", "Hotel Burnham", "The Robey"],
+  "studentHousingSeries": ["HUB", "ŌLIV"],
+  "terminologyOverrides": {
+    "spec": "MasterFormat specification section",
+    "RFI": "Request for Information",
+    "SHPO": "State Historic Preservation Office",
+    "GC": "General Contractor",
+    "FF&E": "Furniture, Fixtures & Equipment"
+  }
+}

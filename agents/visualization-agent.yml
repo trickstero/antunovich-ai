@@ -1,0 +1,12 @@
+name: visualization-agent
+type: subagent
+skill: todd-formula
+triggers: ["render prompt", "visualization", "Krea", "Todd Formula", "exterior view"]
+inputs:
+  project: string
+  view: string
+  materials: string
+  time_of_day: string  # default: golden hour
+output: stdout (clipboard-ready)
+model: claude-sonnet-4-20250514
+max_tokens: 1000

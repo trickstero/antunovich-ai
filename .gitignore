@@ -1,0 +1,23 @@
+# Secrets
+.claude/settings.local.json
+.env
+*.local
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude sessions
+.claude/sessions/
+
+# Build artifacts
+dist/
+build/
+
+# Large files
+*.psd
+*.ai
+*.indd

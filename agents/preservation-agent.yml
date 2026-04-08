@@ -1,0 +1,11 @@
+name: preservation-agent
+type: subagent
+skill: shpo-narrative
+triggers: ["SHPO", "historic", "preservation", "landmark", "rehabilitation narrative"]
+inputs:
+  project: string
+  scope: string
+  existing_materials: string
+output: docs/shpo/{project}-narrative.md
+model: claude-sonnet-4-20250514
+max_tokens: 4000
