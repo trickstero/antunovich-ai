@@ -20,6 +20,17 @@
 - SHPO narratives follow Secretary of the Interior's Standards
 - Visualization prompts use Todd Formula (see skills/todd-formula)
 
+## Slash Commands (.claude/commands/)
+- `/rfi` — Draft an RFI document
+- `/spec` — Write a specification section (MasterFormat)
+- `/shpo` — Draft SHPO preservation narrative
+- `/render` — Generate Todd Formula visualization prompt
+- `/review` — Run code or document review
+- `/bootstrap` — Scaffold a new project module
+- `/cost-impact` — Analyze cost + schedule impact of a design decision or change order (coordinates spec-writer + procurement)
+- `/project-brief` — Generate principal-level strategic brief across all practice areas (coordinates all agents)
+- `/sub-scan` — Evaluate subconsultants and recommend team assembly for pursuits
+
 ## Practice Areas (for context-aware responses)
 1. Mixed-use retail (Crate & Barrel, Arhaus, Butter Milk Ranch)
 2. Multi-family residential
