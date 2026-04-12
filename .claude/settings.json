@@ -12,6 +12,7 @@
   },
   "skills": { "autoActivate": true, "path": "skills/" },
   "agents": { "path": "agents/" },
+  "outputStyles": { "path": ".claude/output-styles/" },
   "mcp": { "config": ".mcp.json" },
   "context": { "warnAt": 0.7, "compactAt": 0.8, "clearAt": 0.9 }
 }

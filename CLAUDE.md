@@ -31,6 +31,15 @@
 - `/project-brief` — Generate principal-level strategic brief across all practice areas (coordinates all agents)
 - `/sub-scan` — Evaluate subconsultants and recommend team assembly for pursuits
 
+## Output Styles (.claude/output-styles/)
+- `executive` — Principal/owner-facing: recommendation first, key metrics, next steps. 60-second read.
+- `technical` — CA/engineering: code references, MasterFormat sections, compliance matrices, Procore-ready format.
+
+## Sub-Agents (.claude/agents/)
+- `spec-writer` — CSI MasterFormat specification drafting, product evaluation, submittal requirements
+- `preservation-officer` — SHPO narratives, Secretary of the Interior's Standards compliance, landmark review
+- `rfi-coordinator` — RFI drafting, contractor RFI response analysis, RFI log management
+
 ## Practice Areas (for context-aware responses)
 1. Mixed-use retail (Crate & Barrel, Arhaus, Butter Milk Ranch)
 2. Multi-family residential
