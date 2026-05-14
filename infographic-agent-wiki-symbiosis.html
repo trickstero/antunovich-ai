@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Brain — The Symbiotic System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E0E0E;
+  --surface: #161616;
+  --surface-2: #1C1C1C;
+  --border: #2A2A2A;
+  --border-soft: #1F1F1F;
+  --text: #F2EDE3;
+  --text-dim: #8A8278;
+  --text-faint: #4A453E;
+  --accent: #C4A882;
+  --accent-deep: #8B6F47;
+  --rule: #3A342C;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(196,168,130,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,168,130,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 72px 64px 56px;
+}
+
+/* ─── HERO ───────────────────────────────── */
+.hero {
+  border-top: 1px solid var(--accent);
+  padding-top: 24px;
+  margin-bottom: 80px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 48px;
+  position: relative;
+}
+
+.hero-corner {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  font-family: 'Inter';
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--bg);
+  padding: 0 0 0 12px;
+  transform: translateY(-50%);
+}
+
+.kicker {
+  font-family: 'Inter';
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: 88px;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.hero .subtitle {
+  font-family: 'Cormorant Garamond';
+  font-weight: 300;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--text-dim);
+  max-width: 540px;
+  line-height: 1.4;
+}
+
+.hero-meta {
+  font-family: 'Inter';
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: right;
+  line-height: 2.1;
+  padding-top: 24px;
+}
+
+.hero-meta span {
+  display: block;
+}
+
+.hero-meta strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ─── SECTION TITLES ─────────────────────── */
+.section-label {
+  font-family: 'Inter';
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.section-label::before {
+  content: '— ';
+  margin-right: 4px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond';
+  font-weight: 300;
+  font-size: 38px;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  line-height: 1.05;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.section-rule {
+  height: 1px;
+  background: var(--rule);
+  margin: 24px 0 36px;
+}
+
+/* ─── ELEVATION ──────────────────────────── */
+.elevation {
+  margin-bottom: 96px;
+}
+
+.elevation-stack {
+  border-left: 1px solid var(--accent-deep);
+  position: relative;
+}
+
+.elevation-stack::before,
+.elevation-stack::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  width: 9px;
+  height: 1px;
+  background: var(--accent);
+}
+.elevation-stack::before { top: 0; }
+.elevation-stack::after { bottom: 0; }
+
+.flow-arrows {
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  z-index: 2;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: 88px 1fr 280px;
+  gap: 32px;
+  align-items: start;
+  padding: 30px 0 30px 32px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.layer:first-child { border-top: 1px solid var(--border); }
+.layer:last-child  { border-bottom: 1px solid var(--accent-deep); }
+
+.layer-marker {
+  font-family: 'Cormorant Garamond';
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 0.9;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.layer-content h3 {
+  font-family: 'Cormorant Garamond';
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.005em;
+  margin-bottom: 4px;
+}
+
+.layer-role {
+  font-family: 'Inter';
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.layer-content p {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.62;
+  max-width: 480px;
+}
+
+.layer-files {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.95;
+  color: var(--text-dim);
+  border-left: 1px solid var(--border);
+  padding-left: 18px;
+}
+
+.layer-files .file {
+  color: var(--text);
+  display: block;
+  letter-spacing: -0.005em;
+}
+
+.layer-files .file::before {
+  content: '◦ ';
+  color: var(--accent-deep);
+}
+
+/* Dimension line on right edge */
+.dim-line {
+  position: absolute;
+  right: -28px;
+  top: 8px;
+  bottom: 8px;
+  width: 8px;
+  border-right: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ─── LOOPS ──────────────────────────────── */
+.loops {
+  margin-bottom: 96px;
+}
+
+.loops-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.loop {
+  border-top: 1px solid var(--border);
+  padding-top: 22px;
+}
+
+.loop-cadence {
+  font-family: 'Inter';
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.loop h4 {
+  font-family: 'Cormorant Garamond';
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 16px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+
+.loop-diagram {
+  width: 100%;
+  height: 130px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.loop p {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.loop p strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* ─── SYMBIOSIS ──────────────────────────── */
+.symbiosis {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 56px 64px 52px;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.symbiosis::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--border-soft);
+  pointer-events: none;
+}
+
+.symbiosis-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 64px;
+  margin-top: 40px;
+}
+
+.agent {
+  text-align: center;
+  padding: 0 12px;
+}
+
+.agent-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 22px;
+  display: block;
+}
+
+.agent h4 {
+  font-family: 'Cormorant Garamond';
+  font-weight: 400;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.agent .agent-role {
+  font-family: 'Inter';
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.agent p {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.substrate {
+  text-align: center;
+  position: relative;
+}
+
+.substrate-arrows {
+  position: absolute;
+  top: 50%;
+  width: 64px;
+  transform: translateY(-50%);
+  height: 14px;
+}
+.substrate-arrows.left  { left: -64px; }
+.substrate-arrows.right { right: -64px; }
+
+.substrate-doc {
+  width: 130px;
+  height: 168px;
+  border: 1px solid var(--accent);
+  padding: 14px 12px;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  line-height: 1.4;
+  color: var(--accent);
+  text-align: left;
+  position: relative;
+  margin: 0 auto 18px;
+  letter-spacing: -0.01em;
+}
+
+.substrate-doc::before {
+  content: '.md';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 3px 8px;
+  font-family: 'Inter';
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.substrate-doc .yaml { color: var(--text-dim); }
+.substrate-doc .link { color: var(--accent); text-decoration: underline; text-decoration-style: dotted; }
+.substrate-doc .h1   { color: var(--text); font-weight: 500; font-size: 10px; }
+
+.substrate-label {
+  font-family: 'Inter';
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ─── FOOTER ─────────────────────────────── */
+footer {
+  border-top: 1px solid var(--accent-deep);
+  padding-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  font-family: 'Inter';
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  align-items: center;
+}
+
+footer .center {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--text-dim);
+}
+
+footer .right { text-align: right; }
+
+/* ─── PRINT ──────────────────────────────── */
+@media print {
+  html, body { background: white; color: #1a1a1a; }
+  body::before { display: none; }
+  .page { padding: 32px 40px; max-width: none; }
+  .hero h1 { font-size: 64px; }
+  .layer-marker { color: #8B6F47; }
+  .symbiosis { background: #FAF8F5; border-color: #DDD6CB; }
+  .substrate-doc { background: white; }
+  .layer-files .file { color: #1a1a1a; }
+  .layer-content p, .loop p { color: #555; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <header class="hero">
+    <span class="hero-corner">SYSTEM ELEVATION · 01</span>
+    <div>
+      <div class="kicker">Claude Brain · Vault Architecture</div>
+      <h1>The <em>Symbiotic</em><br>System.</h1>
+      <p class="subtitle">A self-improving knowledge layer where Obsidian and Claude inhabit the same substrate — markdown as living memory, wikilinks as nervous system.</p>
+    </div>
+    <div class="hero-meta">
+      <span><strong>Trickstero</strong></span>
+      <span>Antunovich Associates</span>
+      <span>—</span>
+      <span>2026 · 05 · 14</span>
+      <span>Rev A</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ ELEVATION ═══════════════════ -->
+  <section class="elevation">
+    <div class="section-label">Section 01 · Architectural Stack</div>
+    <h2 class="section-title">Five layers, <em>top-down.</em></h2>
+    <div class="section-rule"></div>
+
+    <div class="elevation-stack">
+
+      <div class="layer">
+        <div class="layer-marker">05</div>
+        <div class="layer-content">
+          <h3>Reasoning</h3>
+          <div class="layer-role">Where decisions happen</div>
+          <p>Claude Opus and Sonnet handle coordination, edits, lookups. Kimi K2 absorbs long-form output. Routing is policy, not preference — heavy-token work is announced and offloaded by default, keeping the Opus budget for what only Opus can do.</p>
+        </div>
+        <div class="layer-files">
+          <span class="file">claude-opus-4.7</span>
+          <span class="file">claude-sonnet-4.6</span>
+          <span class="file">kimi-k2.6</span>
+          <span class="file">.cowork/kimi_bridge.py</span>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-marker">04</div>
+        <div class="layer-content">
+          <h3>Specialist</h3>
+          <div class="layer-role">Domain experts on call</div>
+          <p>Five Cowork specialists — Zoning, SHPO, Spec, RFI, Code-Research — each with its own constraint library and pattern memory. The Coordinator sequences them, builds context blocks, runs the FLAGS-block self-test before any output ships.</p>
+        </div>
+        <div class="layer-files">
+          <span class="file">cowork/Cowork-Coordinator/</span>
+          <span class="file">cowork/Cowork-Zoning/</span>
+          <span class="file">cowork/Cowork-Spec/</span>
+          <span class="file">cowork/Cowork-SHPO/</span>
+          <span class="file">cowork/Cowork-RFI/</span>
+          <span class="file">cowork/Cowork-Code-Research/</span>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-marker">03</div>
+        <div class="layer-content">
+          <h3>Operating State</h3>
+          <div class="layer-role">The rules that govern behavior</div>
+          <p>CLAUDE.md holds the invariants — human-curated, rarely touched. AGENTS.md holds the current goals — AI-rewritable weekly by /firmware-upgrade. Hard Rules accrete one at a time, each traceable to a real failure.</p>
+        </div>
+        <div class="layer-files">
+          <span class="file">CLAUDE.md</span>
+          <span class="file">wiki/AGENTS.md</span>
+          <span class="file">wiki/concepts/Hard Rules.md</span>
+          <span class="file">.claude/skills/firmware-upgrade/</span>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-marker">02</div>
+        <div class="layer-content">
+          <h3>Source of Truth</h3>
+          <div class="layer-role">The wiki — curated knowledge</div>
+          <p>Five hundred-plus interlinked markdown pages. Concepts, ideas, sources, projects, people. Every claim cites a vault file (Hard Rule 21). The compounding asset — what makes year three more valuable than year one.</p>
+        </div>
+        <div class="layer-files">
+          <span class="file">wiki/concepts/</span>
+          <span class="file">wiki/ideas/</span>
+          <span class="file">wiki/sources/</span>
+          <span class="file">wiki/projects/</span>
+          <span class="file">wiki/people/</span>
+          <span class="file">wiki/index.md</span>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-marker">01</div>
+        <div class="layer-content">
+          <h3>Capture</h3>
+          <div class="layer-role">Where information enters</div>
+          <p>Passive ingest from daily browsing — X bookmarks, YouTube transcripts, articles — staged in inbox/ for morning review. Formal sources archived to raw/, immutable once filed. Capture friction approaches zero.</p>
+        </div>
+        <div class="layer-files">
+          <span class="file">inbox/</span>
+          <span class="file">raw/</span>
+          <span class="file">raw/assets/</span>
+          <span class="file">x-bookmarks-daily</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ LOOPS ═══════════════════ -->
+  <section class="loops">
+    <div class="section-label">Section 02 · Self-Learning Cycles</div>
+    <h2 class="section-title">Four loops, <em>compounding.</em></h2>
+    <div class="section-rule"></div>
+
+    <div class="loops-grid">
+
+      <div class="loop">
+        <div class="loop-cadence">Daily · ~06:00</div>
+        <h4>Passive Capture</h4>
+        <svg class="loop-diagram" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L5,3 L0,6" fill="none" stroke="#C4A882" stroke-width="1"/>
+            </marker>
+          </defs>
+          <g fill="none" stroke="#C4A882" stroke-width="1">
+            <circle cx="36" cy="40" r="13"/>
+            <circle cx="100" cy="20" r="13"/>
+            <circle cx="164" cy="40" r="13"/>
+            <circle cx="100" cy="100" r="13"/>
+          </g>
+          <g stroke="#C4A882" stroke-width="0.8" fill="none">
+            <path d="M 49 38 Q 70 22 87 22" marker-end="url(#arr1)"/>
+            <path d="M 113 22 Q 138 24 151 36" marker-end="url(#arr1)"/>
+            <path d="M 159 51 Q 140 90 113 98" marker-end="url(#arr1)"/>
+            <path d="M 87 98 Q 60 92 40 52" marker-end="url(#arr1)"/>
+          </g>
+          <g font-family="Inter" font-size="7.5" font-weight="500" fill="#F2EDE3" text-anchor="middle">
+            <text x="36" y="43">X</text>
+            <text x="100" y="23">INBOX</text>
+            <text x="164" y="43">SYNTH</text>
+            <text x="100" y="103">WIKI</text>
+          </g>
+        </svg>
+        <p>X bookmarks scrape overnight → <strong>inbox/</strong> → morning-synthesis triages → wiki ingest or discard. The bookmark <em>is</em> the capture event.</p>
+      </div>
+
+      <div class="loop">
+        <div class="loop-cadence">Weekly · Sundays</div>
+        <h4>Firmware Upgrade</h4>
+        <svg class="loop-diagram" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L5,3 L0,6" fill="none" stroke="#C4A882" stroke-width="1"/>
+            </marker>
+          </defs>
+          <g fill="none" stroke="#C4A882" stroke-width="1">
+            <rect x="20" y="48" width="40" height="34"/>
+            <rect x="80" y="48" width="40" height="34"/>
+            <rect x="140" y="48" width="40" height="34"/>
+          </g>
+          <g stroke="#C4A882" stroke-width="0.8" fill="none">
+            <path d="M 60 65 L 75 65" marker-end="url(#arr2)"/>
+            <path d="M 120 65 L 135 65" marker-end="url(#arr2)"/>
+            <path d="M 160 82 Q 160 110 100 110 Q 40 110 40 82" stroke-dasharray="2 3" marker-end="url(#arr2)"/>
+          </g>
+          <g font-family="Inter" font-size="7" font-weight="500" fill="#F2EDE3" text-anchor="middle">
+            <text x="40" y="68">LOG</text>
+            <text x="100" y="68">DRAFT</text>
+            <text x="160" y="68">AGENTS</text>
+            <text x="100" y="123" fill="#8A8278">approve</text>
+          </g>
+        </svg>
+        <p><strong>/firmware-upgrade</strong> reads 7 days of log + quality-log + candidates, drafts new AGENTS.md sections 2-4, presents diff before writing.</p>
+      </div>
+
+      <div class="loop">
+        <div class="loop-cadence">Per Session</div>
+        <h4>Hard Rule Genesis</h4>
+        <svg class="loop-diagram" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L5,3 L0,6" fill="none" stroke="#C4A882" stroke-width="1"/>
+            </marker>
+          </defs>
+          <g fill="none" stroke="#C4A882" stroke-width="1">
+            <path d="M 36 28 L 18 52 L 54 52 Z"/>
+            <circle cx="100" cy="40" r="13"/>
+            <rect x="148" y="27" width="34" height="26"/>
+            <circle cx="100" cy="100" r="13"/>
+          </g>
+          <g stroke="#C4A882" stroke-width="0.8" fill="none">
+            <path d="M 56 47 Q 70 42 87 41" marker-end="url(#arr3)"/>
+            <path d="M 113 40 Q 130 40 146 40" marker-end="url(#arr3)"/>
+            <path d="M 165 53 Q 165 100 113 100" marker-end="url(#arr3)"/>
+            <path d="M 87 100 Q 50 95 36 60" stroke-dasharray="2 3" marker-end="url(#arr3)"/>
+          </g>
+          <g font-family="Inter" font-size="7" font-weight="500" fill="#F2EDE3" text-anchor="middle">
+            <text x="36" y="48">FAIL</text>
+            <text x="100" y="43">RULE</text>
+            <text x="165" y="44">EVAL</text>
+            <text x="100" y="103">PASS</text>
+          </g>
+        </svg>
+        <p>Failure → post-mortem in <strong>error-library</strong> → new Hard Rule → eval probe validates → the same failure mode never repeats.</p>
+      </div>
+
+      <div class="loop">
+        <div class="loop-cadence">Per Cowork Run</div>
+        <h4>Specialist Promotion</h4>
+        <svg class="loop-diagram" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L5,3 L0,6" fill="none" stroke="#C4A882" stroke-width="1"/>
+            </marker>
+          </defs>
+          <g fill="none" stroke="#C4A882" stroke-width="1">
+            <rect x="20" y="50" width="36" height="30"/>
+            <circle cx="100" cy="65" r="14"/>
+            <rect x="146" y="22" width="38" height="26"/>
+            <rect x="146" y="82" width="38" height="26"/>
+          </g>
+          <g stroke="#C4A882" stroke-width="0.8" fill="none">
+            <path d="M 56 65 L 85 65" marker-end="url(#arr4)"/>
+            <path d="M 113 58 Q 130 45 144 38" marker-end="url(#arr4)"/>
+            <path d="M 113 72 Q 130 88 144 95" marker-end="url(#arr4)"/>
+          </g>
+          <g font-family="Inter" font-size="7" font-weight="500" fill="#F2EDE3" text-anchor="middle">
+            <text x="38" y="68">_mem</text>
+            <text x="100" y="68">?</text>
+            <text x="165" y="38">WIKI</text>
+            <text x="165" y="98">stay</text>
+          </g>
+          <g font-family="Inter" font-size="6.5" fill="#8A8278" text-anchor="middle">
+            <text x="125" y="40">cross-spec</text>
+            <text x="125" y="105">single-spec</text>
+          </g>
+        </svg>
+        <p>Specialist learns pattern → <strong>_memory.md</strong> → if cross-applicable, promote to wiki/concepts/. Knowledge stops being siloed.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SYMBIOSIS ═══════════════════ -->
+  <section class="symbiosis">
+    <div class="section-label">Section 03 · Symbiosis</div>
+    <h2 class="section-title">One substrate, <em>two readers.</em></h2>
+    <div class="section-rule"></div>
+
+    <div class="symbiosis-grid">
+
+      <div class="agent">
+        <svg class="agent-icon" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="#C4A882" stroke-width="1.2" stroke-linejoin="round">
+            <polygon points="40,8 68,26 60,68 20,68 12,26"/>
+            <polyline points="40,8 60,68 12,26"/>
+            <polyline points="40,8 20,68 68,26"/>
+          </g>
+        </svg>
+        <h4>Obsidian</h4>
+        <div class="agent-role">Human Interface</div>
+        <p>Reads, writes, navigates the graph. Sees backlinks, opens panels, drags between folders, hand-curates structure.</p>
+      </div>
+
+      <div class="substrate">
+        <svg class="substrate-arrows left" viewBox="0 0 64 14" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#C4A882" stroke-width="0.9" fill="none">
+            <line x1="4" y1="4" x2="58" y2="4"/>
+            <polyline points="54,1 58,4 54,7"/>
+            <line x1="60" y1="10" x2="6" y2="10"/>
+            <polyline points="10,7 6,10 10,13"/>
+          </g>
+        </svg>
+        <svg class="substrate-arrows right" viewBox="0 0 64 14" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#C4A882" stroke-width="0.9" fill="none">
+            <line x1="4" y1="4" x2="58" y2="4"/>
+            <polyline points="54,1 58,4 54,7"/>
+            <line x1="60" y1="10" x2="6" y2="10"/>
+            <polyline points="10,7 6,10 10,13"/>
+          </g>
+        </svg>
+        <div class="substrate-doc">
+          <span class="yaml">---<br>
+          title: Page<br>
+          type: concept<br>
+          updated: 2026-05-14<br>
+          ---</span><br>
+          <br>
+          <span class="h1"># Heading</span><br>
+          <br>
+          Body text refers<br>
+          to <span class="link">[[wikilink]]</span><br>
+          and cites<br>
+          <span class="yaml">[Source: file]</span>
+        </div>
+        <div class="substrate-label">.md · Shared Substrate</div>
+      </div>
+
+      <div class="agent">
+        <svg class="agent-icon" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#C4A882" stroke-width="2.4" stroke-linecap="round">
+            <line x1="40" y1="10" x2="40" y2="70"/>
+            <line x1="10" y1="40" x2="70" y2="40"/>
+            <line x1="18.8" y1="18.8" x2="61.2" y2="61.2"/>
+            <line x1="61.2" y1="18.8" x2="18.8" y2="61.2"/>
+          </g>
+          <circle cx="40" cy="40" r="3" fill="#C4A882"/>
+        </svg>
+        <h4>Claude</h4>
+        <div class="agent-role">AI Interface</div>
+        <p>Reads, writes, follows wikilinks programmatically. Cites sources, flags conflicts, edits in place, learns from outcomes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer>
+    <span>Trickstero · A.A.</span>
+    <span class="center">Markdown is the contract. Everything else negotiates.</span>
+    <span class="right">v.2026.05.14 · Rev A</span>
+  </footer>
+
+</main>
+</body>
+</html>
