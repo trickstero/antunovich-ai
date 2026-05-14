@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wiki vs RAG</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #E8DFD0;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  .card {
+    width: 1500px;
+    height: 600px;
+    background: #FAF5EC;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow:
+      0 60px 120px -40px rgba(80, 55, 30, 0.30),
+      0 1px 0 rgba(255,255,255,0.6) inset;
+  }
+  .card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(rgba(140, 100, 60, 0.06) 1px, transparent 1px);
+    background-size: 5px 5px;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+  .card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg,
+      rgba(255, 246, 230, 0.4) 0%,
+      transparent 35%,
+      transparent 65%,
+      rgba(196, 168, 130, 0.10) 100%);
+    pointer-events: none;
+  }
+  .corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+  }
+  .corner svg { display: block; }
+
+  .top {
+    position: absolute;
+    top: 60px;
+    left: 80px;
+    right: 80px;
+    z-index: 2;
+  }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #8B6F47;
+  }
+  .label-muted {
+    color: #6B5E52;
+  }
+  .headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: #1C1714;
+    font-size: 64px;
+    line-height: 1.0;
+    letter-spacing: -0.012em;
+    margin-top: 14px;
+  }
+  .subhead {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #6B5E52;
+    font-size: 22px;
+    font-weight: 400;
+    margin-top: 8px;
+  }
+  .bottom {
+    position: absolute;
+    bottom: 56px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    z-index: 2;
+  }
+  .stat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: #1C1714;
+    letter-spacing: -0.005em;
+  }
+  .credit {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: #6B5E52;
+    text-transform: uppercase;
+  }
+  svg.canvas {
+    position: absolute;
+    top: 215px;
+    left: 0;
+    z-index: 1;
+  }
+  .col-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    fill: #8B6F47;
+  }
+  .col-label-muted { fill: #6B5E52; }
+  .col-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    fill: #6B5E52;
+  }
+  .node-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    fill: #1C1714;
+  }
+  .node-label-strong { font-weight: 600; }
+  .annot {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    fill: #6B5E52;
+  }
+  .annot-bronze {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    fill: #8B6F47;
+    letter-spacing: 0.04em;
+  }
+  .divider {
+    stroke: #D8CDB8;
+    stroke-width: 1;
+  }
+  .link {
+    stroke: #B89065;
+    stroke-width: 1;
+    fill: none;
+    opacity: 0.55;
+  }
+  .link-faint {
+    stroke: #B89065;
+    stroke-width: 1;
+    fill: none;
+    opacity: 0.35;
+    stroke-dasharray: 2 3;
+  }
+  .node {
+    fill: #8B6F47;
+  }
+  .node-strong {
+    fill: #8B6F47;
+  }
+  .cloud {
+    fill: #A89B89;
+  }
+  .cloud-hit {
+    fill: #8B6F47;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card { box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- registration corners -->
+  <div class="corner" style="top: 24px; left: 24px;">
+    <svg viewBox="0 0 18 18"><path d="M 0 7 L 0 0 L 7 0" stroke="#1C1714" stroke-width="1" fill="none"/></svg>
+  </div>
+  <div class="corner" style="top: 24px; right: 24px;">
+    <svg viewBox="0 0 18 18"><path d="M 11 0 L 18 0 L 18 7" stroke="#1C1714" stroke-width="1" fill="none"/></svg>
+  </div>
+  <div class="corner" style="bottom: 24px; left: 24px;">
+    <svg viewBox="0 0 18 18"><path d="M 0 11 L 0 18 L 7 18" stroke="#1C1714" stroke-width="1" fill="none"/></svg>
+  </div>
+  <div class="corner" style="bottom: 24px; right: 24px;">
+    <svg viewBox="0 0 18 18"><path d="M 11 18 L 18 18 L 18 11" stroke="#1C1714" stroke-width="1" fill="none"/></svg>
+  </div>
+
+  <!-- top -->
+  <div class="top">
+    <div class="label">A working note · @StanMatuzik · 2026.05.14</div>
+    <div class="headline">Wiki beats RAG at human scale.</div>
+    <div class="subhead">On building knowledge for LLM agents under one thousand pages.</div>
+  </div>
+
+  <!-- comparison svg -->
+  <svg class="canvas" width="1500" height="330" viewBox="0 0 1500 330">
+
+    <!-- column headers -->
+    <text x="80" y="34" class="col-label">WIKI · CURATED, LINKED</text>
+    <text x="80" y="56" class="col-sub">about 500 markdown pages, every link by hand</text>
+
+    <text x="800" y="34" class="col-label col-label-muted">RAG · EMBEDDED, RETRIEVED</text>
+    <text x="800" y="56" class="col-sub">vectors in a database, retrieved by similarity</text>
+
+    <!-- divider -->
+    <line x1="750" y1="20" x2="750" y2="300" class="divider"/>
+
+    <!-- ===== WIKI SIDE ===== -->
+
+    <!-- connections (behind nodes) -->
+    <!-- AGENTS → Coordinator -->
+    <path d="M 130 110 Q 230 120, 320 135" class="link"/>
+    <!-- Coordinator → Specialists -->
+    <path d="M 340 150 Q 350 180, 340 210" class="link"/>
+    <!-- Coordinator → Hard Rules -->
+    <path d="M 305 145 Q 240 160, 195 180" class="link"/>
+    <!-- Coordinator → Hot Cache -->
+    <path d="M 380 145 Q 460 160, 520 180" class="link"/>
+    <!-- Hot Cache → Specialists -->
+    <path d="M 525 195 Q 460 210, 385 220" class="link"/>
+    <!-- Specialists → Zoning -->
+    <path d="M 320 225 Q 250 250, 200 285" class="link"/>
+    <!-- Specialists → SHPO -->
+    <path d="M 345 230 Q 350 260, 350 290" class="link"/>
+    <!-- Specialists → Code -->
+    <path d="M 380 225 Q 450 250, 500 285" class="link"/>
+    <!-- Code → IBC -->
+    <path d="M 515 295 Q 555 305, 595 320" class="link"/>
+    <!-- Code → Sprinklers -->
+    <path d="M 500 300 Q 460 310, 420 320" class="link"/>
+    <!-- IBC → Sprinklers (the footnote link) -->
+    <path d="M 595 320 Q 510 318, 425 322" class="link-faint"/>
+    <!-- Hard Rules → IBC (the governance link) -->
+    <path d="M 185 195 Q 380 280, 590 318" class="link-faint"/>
+
+    <!-- nodes -->
+    <!-- AGENTS -->
+    <circle cx="125" cy="105" r="4" class="node"/>
+    <text x="135" y="109" class="node-label">AGENTS.md</text>
+
+    <!-- Hard Rules -->
+    <circle cx="180" cy="185" r="4" class="node"/>
+    <text x="190" y="189" class="node-label">Hard Rules</text>
+
+    <!-- Hot Cache -->
+    <circle cx="535" cy="185" r="4" class="node"/>
+    <text x="545" y="189" class="node-label">Hot Cache</text>
+
+    <!-- Coordinator -->
+    <circle cx="345" cy="140" r="5.5" class="node-strong"/>
+    <text x="358" y="144" class="node-label node-label-strong">Coordinator</text>
+
+    <!-- Specialists -->
+    <circle cx="345" cy="220" r="5.5" class="node-strong"/>
+    <text x="358" y="224" class="node-label node-label-strong">Specialists</text>
+
+    <!-- Zoning -->
+    <circle cx="195" cy="290" r="4" class="node"/>
+    <text x="205" y="294" class="node-label">Zoning</text>
+
+    <!-- SHPO -->
+    <circle cx="350" cy="300" r="4" class="node"/>
+    <text x="360" y="304" class="node-label">SHPO</text>
+
+    <!-- Code -->
+    <circle cx="510" cy="290" r="4" class="node"/>
+    <text x="520" y="294" class="node-label">Code</text>
+
+    <!-- IBC Table 506.2 -->
+    <circle cx="600" cy="320" r="4" class="node"/>
+    <text x="610" y="324" class="node-label">IBC Table 506.2</text>
+
+    <!-- Sprinklers -->
+    <circle cx="415" cy="322" r="4" class="node"/>
+    <text x="425" y="326" class="node-label">Sprinklers</text>
+
+    <!-- wiki annotation -->
+    <text x="80" y="83" class="annot">every link placed by a human, every page written after a question.</text>
+
+    <!-- ===== RAG SIDE ===== -->
+
+    <!-- background cloud of dots -->
+    <g class="cloud">
+      <circle cx="900" cy="140" r="2.5"/>
+      <circle cx="920" cy="158" r="2"/>
+      <circle cx="945" cy="135" r="3"/>
+      <circle cx="965" cy="155" r="2.2"/>
+      <circle cx="985" cy="142" r="2.8"/>
+      <circle cx="1005" cy="162" r="2.4"/>
+      <circle cx="1028" cy="138" r="2.6"/>
+      <circle cx="1055" cy="155" r="2"/>
+      <circle cx="1080" cy="140" r="2.8"/>
+      <circle cx="1100" cy="160" r="2.3"/>
+      <circle cx="1128" cy="138" r="2.5"/>
+      <circle cx="1155" cy="158" r="2.7"/>
+      <circle cx="1180" cy="142" r="2.1"/>
+      <circle cx="1208" cy="162" r="2.6"/>
+      <circle cx="1235" cy="142" r="2.4"/>
+      <circle cx="1260" cy="160" r="2.8"/>
+      <circle cx="1290" cy="148" r="2.2"/>
+      <circle cx="1315" cy="158" r="2.5"/>
+      <circle cx="1345" cy="142" r="2.3"/>
+
+      <circle cx="890" cy="180" r="2.4"/>
+      <circle cx="915" cy="200" r="2.7"/>
+      <circle cx="938" cy="185" r="2.2"/>
+      <circle cx="960" cy="205" r="2.9"/>
+      <circle cx="985" cy="190" r="2.3"/>
+      <circle cx="1010" cy="208" r="2.5"/>
+      <circle cx="1038" cy="188" r="2.6"/>
+      <circle cx="1062" cy="205" r="2.2"/>
+      <circle cx="1088" cy="190" r="2.4"/>
+      <circle cx="1115" cy="210" r="2.8"/>
+      <circle cx="1142" cy="190" r="2.3"/>
+      <circle cx="1168" cy="208" r="2.5"/>
+      <circle cx="1195" cy="188" r="2.7"/>
+      <circle cx="1222" cy="208" r="2.3"/>
+      <circle cx="1248" cy="190" r="2.5"/>
+      <circle cx="1275" cy="210" r="2.6"/>
+      <circle cx="1302" cy="195" r="2.2"/>
+      <circle cx="1330" cy="208" r="2.4"/>
+      <circle cx="1358" cy="192" r="2.6"/>
+
+      <circle cx="895" cy="232" r="2.5"/>
+      <circle cx="922" cy="248" r="2.3"/>
+      <circle cx="948" cy="232" r="2.7"/>
+      <circle cx="972" cy="250" r="2.4"/>
+      <circle cx="998" cy="235" r="2.8"/>
+      <circle cx="1024" cy="252" r="2.2"/>
+      <circle cx="1050" cy="235" r="2.5"/>
+      <circle cx="1078" cy="252" r="2.7"/>
+      <circle cx="1105" cy="238" r="2.3"/>
+      <circle cx="1132" cy="255" r="2.5"/>
+      <circle cx="1158" cy="240" r="2.6"/>
+      <circle cx="1185" cy="255" r="2.3"/>
+      <circle cx="1212" cy="240" r="2.7"/>
+      <circle cx="1240" cy="258" r="2.4"/>
+      <circle cx="1268" cy="240" r="2.6"/>
+      <circle cx="1295" cy="255" r="2.2"/>
+      <circle cx="1322" cy="240" r="2.5"/>
+      <circle cx="1350" cy="252" r="2.7"/>
+
+      <circle cx="905" cy="278" r="2.4"/>
+      <circle cx="932" cy="295" r="2.6"/>
+      <circle cx="958" cy="280" r="2.2"/>
+      <circle cx="985" cy="298" r="2.8"/>
+      <circle cx="1012" cy="282" r="2.4"/>
+      <circle cx="1040" cy="298" r="2.6"/>
+      <circle cx="1068" cy="285" r="2.3"/>
+      <circle cx="1095" cy="300" r="2.5"/>
+      <circle cx="1122" cy="285" r="2.7"/>
+      <circle cx="1148" cy="298" r="2.3"/>
+      <circle cx="1175" cy="288" r="2.5"/>
+      <circle cx="1202" cy="300" r="2.6"/>
+      <circle cx="1230" cy="285" r="2.2"/>
+      <circle cx="1258" cy="298" r="2.4"/>
+      <circle cx="1285" cy="282" r="2.7"/>
+      <circle cx="1312" cy="298" r="2.3"/>
+      <circle cx="1340" cy="285" r="2.5"/>
+    </g>
+
+    <!-- top-5 "retrieved" highlights -->
+    <g class="cloud-hit">
+      <circle cx="985" cy="190" r="3.5"/>
+      <circle cx="1115" cy="210" r="3.5"/>
+      <circle cx="1222" cy="208" r="3.5"/>
+      <circle cx="1078" cy="252" r="3.5"/>
+      <circle cx="1268" cy="240" r="3.5"/>
+    </g>
+
+    <!-- dashed bracket around retrieved -->
+    <path d="M 950 105 Q 950 90, 970 90 L 1290 90 Q 1310 90, 1310 105"
+          stroke="#8B6F47" stroke-width="1" fill="none" stroke-dasharray="3 3" opacity="0.8"/>
+    <path d="M 1130 90 L 1130 95" stroke="#8B6F47" stroke-width="1" opacity="0.8"/>
+
+    <text x="952" y="82" class="annot-bronze">top-5 by similarity</text>
+    <text x="1075" y="82" class="annot-bronze" style="font-style:italic;">— was it the right five?</text>
+
+    <!-- rag annotation -->
+    <text x="800" y="83" class="annot">no labels, no curation, no way to know what was missed.</text>
+
+  </svg>
+
+  <!-- bottom -->
+  <div class="bottom">
+    <div class="stat">Five weeks. Five hundred pages. Zero embeddings.</div>
+    <div class="credit">@StanMatuzik</div>
+  </div>
+
+</div>
+</body>
+</html>
